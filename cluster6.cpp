@@ -1,3 +1,5 @@
+//Working perfectly!!!
+
 #include <vector>
 #include <fstream>
 #include <iostream>
@@ -66,19 +68,29 @@ int main()
 	 i=i+1;
        }
      /////////////////////////////////////////////////////////////////////////////////////
-       int clusterno=0;
-       vector< vector<double> > cluster;
+     int clusterno=0, flag1,flag2;
+       vector< vector<int> > cluster;
        i=0;
      if(dless.size()!=0)
        {
 	 clusterno=clusterno+1;
-	 vector<double> idcluster;
+	 vector<int> idcluster;
 	 idcluster.push_back(id1[i]);
 	 idcluster.push_back(id2[i]);
 	 cluster.push_back(idcluster);
 	 i=i+1;
        }
- 
+     for(vector<vector<int> >::iterator ab =cluster.begin(); ab != cluster.end(); ++ab)
+	{
+		//it is now a pointer to a vector<int>
+		for(vector<int>::iterator cd = ab->begin(); cd != ab->end(); ++cd)
+		{
+			// jt is now a pointer to an integer.
+		printf("%d\t",*cd);
+		}
+		cout << endl;
+	}
+
      printf("%d\n",clusterno);
 
      /*    for(vector<vector<double> >::iterator it = cluster.begin(); it != cluster.end(); ++it)
@@ -98,7 +110,69 @@ int main()
  int addi;
  addi = match(19,20);
  printf("%d\n",addi);
- 
+ int id1_n,id2_n;
+ while(i<id1.size())
+   {
+     flag1=0; //If after calculation flag 1 is zero then id1 is not present in any cluster id list. If it is 1, the it has been found.
+     for(size_t n = 0; n < cluster.size(); ++n)
+	  {
+	      if(std::find(cluster[n].begin(),cluster[n].end(),id1[i]) != cluster[n].end())
+	      {
+		std::cout << "Found root at row " << n  << '\n';
+		//cluster[n].push_back(id1[i]);
+		id1_n=n;
+		flag1=1;
+	      }
+	  }
+     flag2=0;
+     for(size_t n = 0; n < cluster.size(); ++n)
+	  {
+	      if(std::find(cluster[n].begin(),cluster[n].end(),id2[i]) != cluster[n].end())
+	      {
+		std::cout << "Found root at row " << n  << '\n';
+		//cluster[n].push_back(id2[i]);
+		id2_n=n;
+		flag2=1;
+	      }
+	  }
+     if (flag1==1 && flag2 == 0)
+       {
+	 cluster[id1_n].push_back(id2[i]);
+       }
+
+     if (flag1==0 && flag2 == 1)
+       {
+	 cluster[id2_n].push_back(id1[i]);
+       }
+
+     if(flag1==0 && flag2 ==0)
+       {
+	 clusterno=clusterno+1;
+	 std::vector<int> temp;
+	 temp.push_back(id1[i]);
+	 temp.push_back(id2[i]);
+
+	 cluster.push_back(temp);
+	 
+       }
+     
+ i=i+1;
+   }
+
+ printf("Cluster no %d\n", clusterno);
+
+
+ for(vector<vector<int> >::iterator ab =cluster.begin(); ab != cluster.end(); ++ab)
+	{
+		//it is now a pointer to a vector<int>
+		for(vector<int>::iterator cd = ab->begin(); cd != ab->end(); ++cd)
+		{
+			// jt is now a pointer to an integer.
+		printf("%d\t",*cd);
+		}
+		cout << endl;
+	}
+
 
  /*   while(i<id1.size())
 	{
