@@ -5,6 +5,7 @@
 #include <iostream>
 #include <math.h>
 using namespace std;
+#include <time.h>
 int match (int, int);
 
 
@@ -13,9 +14,11 @@ int match (int, int);
 
 int main()
 {
-  double R=2.0;
+  clock_t tbeg,tend;
+  tbeg = clock();
+  double R=10.0;
   //First read in the input x and y positions from the file.
-  std::ifstream fin("position.txt");
+  std::ifstream fin("test5pos.txt");
   std::vector<double> xpos, ypos;
   double x,y;
      while (fin >> x)
@@ -25,12 +28,12 @@ int main()
             ypos.push_back(x);
      } 
      //Printing the input data out.
-     printf("Input x y positions\n");
-     printf("%ld\n",xpos.size());
+     // printf("Input x y positions\n");
+     printf("Data length %ld\n",xpos.size());
      int i=0;
      while(i<xpos.size())
        {
-	 printf("%d %f %f\n",i,xpos[i],ypos[i]);
+	 // printf("%d %f %f\n",i,xpos[i],ypos[i]);
 	 i=i+1;
        }
      fin.close();
@@ -38,7 +41,7 @@ int main()
      std::vector<int> id1, id2;
      std::vector<double>  dless;
      //Find all pair distances
-     printf("Now listing all pair distances\n");
+     //  printf("Now listing all pair distances\n");
      int j,k;
      double dist;
      j=0;
@@ -48,7 +51,7 @@ int main()
 	 while(k<xpos.size())
 	   {
 	     dist=sqrt((xpos[k]-xpos[j])*(xpos[k]-xpos[j])+(ypos[k]-ypos[j])*(ypos[k]-ypos[j]));
-	     printf("%d %d %f\n",j,k,dist);
+	     //printf("%d %d %f\n",j,k,dist);
 	     if(dist<R)
 	       {
 		 id1.push_back(j);
@@ -60,11 +63,11 @@ int main()
 	 j=j+1;
        }
 
-     printf("the cluster candidates\n");
+     //printf("the cluster candidates\n");
       i=0;
      while(i<id1.size())
        {
-	 printf("%d %d %f\n",id1[i],id2[i],dless[i]);
+	 // printf("%d %d %f\n",id1[i],id2[i],dless[i]);
 	 i=i+1;
        }
      /////////////////////////////////////////////////////////////////////////////////////
@@ -86,12 +89,12 @@ int main()
 		for(vector<int>::iterator cd = ab->begin(); cd != ab->end(); ++cd)
 		{
 			// jt is now a pointer to an integer.
-		printf("%d\t",*cd);
+		  //	printf("%d\t",*cd);
 		}
-		cout << endl;
+		//cout <<"\n\n"<< endl;
 	}
 
-     printf("%d\n",clusterno);
+     //printf("%d\n",clusterno);
 
      /*    for(vector<vector<double> >::iterator it = cluster.begin(); it != cluster.end(); ++it)
 	{
@@ -109,7 +112,7 @@ int main()
      //vector< vector<double> > cluster;
  int addi;
  addi = match(19,20);
- printf("%d\n",addi);
+ // printf("%d\n",addi);
  int id1_n,id2_n;
  while(i<id1.size())
    {
@@ -118,7 +121,7 @@ int main()
 	  {
 	      if(std::find(cluster[n].begin(),cluster[n].end(),id1[i]) != cluster[n].end())
 	      {
-		std::cout << "Found root at row " << n  << '\n';
+		//std::cout << "Found root at row " << n  << '\n';
 		//cluster[n].push_back(id1[i]);
 		id1_n=n;
 		flag1=1;
@@ -129,7 +132,7 @@ int main()
 	  {
 	      if(std::find(cluster[n].begin(),cluster[n].end(),id2[i]) != cluster[n].end())
 	      {
-		std::cout << "Found root at row " << n  << '\n';
+		//std::cout << "Found root at row " << n  << '\n';
 		//cluster[n].push_back(id2[i]);
 		id2_n=n;
 		flag2=1;
@@ -159,11 +162,12 @@ int main()
  i=i+1;
    }
 
- printf("Cluster no %d\n", clusterno);
 
 
+ int count=0;
  for(vector<vector<int> >::iterator ab =cluster.begin(); ab != cluster.end(); ++ab)
 	{
+	  printf("Cluster %d has paricles with id\n", count);
 		//it is now a pointer to a vector<int>
 		for(vector<int>::iterator cd = ab->begin(); cd != ab->end(); ++cd)
 		{
@@ -171,30 +175,11 @@ int main()
 		printf("%d\t",*cd);
 		}
 		cout << endl;
+		count=count+1;
 	}
-
-
- /*   while(i<id1.size())
-	{
-	  if(std::find(c1_id.begin(),c1_id.end(),id1[i]) != c1_id.end())
-	    {
-	  c1_id.push_back(id1[i]);
-	     }
-	  else if(std::find(c1_id.begin(),c1_id.end(),id2[i]) != c1_id.end())
-	    {
-	      c1_id.push_back(id2[i]);
-	    }
-	  else
-	    {
-	      clusterno=clusterno+1;
-	      c2_id.push_back(id1[i]);
-	      c2_id.push_back(id2[i]);
-	    }
-	  i=i+1;
-	}
-	printf("%d\n",clusterno);
- */
-     
+ printf("Cluster no %d\n", clusterno);
+ tend = clock();
+ printf("It took %e seconds.\n",(double)(tend-tbeg)/CLOCKS_PER_SEC);   
      }
 
 int match (int a, int b)
