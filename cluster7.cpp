@@ -25,11 +25,11 @@ int main()
   tbeg = clock();          // We want to find the processor time taken by the program.
  
   //***************// 
-  double R=10.0;      //Choosing and declaring a linking length.
+  double R=2.0;      //Choosing and declaring a linking length.
   //***************//
 
   //********* INPUT FILE HERE **********//
-  std::ifstream fin("test3pos.txt");   
+  std::ifstream fin("test1pos.txt");   
   //************************************//
 
 
@@ -103,7 +103,7 @@ int main()
 		//std::cout << "Found root at row " << n  << '\n';
 		//cluster[n].push_back(id1[i]);
 		id1_n=n;
-		flag1=1;
+		flag1=1;  //Set flag1 to 1 if id1 is found.
 	      }
 	  }
      flag2=0;
@@ -114,20 +114,20 @@ int main()
 		//std::cout << "Found root at row " << n  << '\n';
 		//cluster[n].push_back(id2[i]);
 		id2_n=n;
-		flag2=1;
+		flag2=1;   // //Set flag1 to 1 if id1 is found.
 	      }
 	  }
-     if (flag1==1 && flag2 == 0)
+     if (flag1==1 && flag2 == 0)  //If id1 has been found and id2 has not then insert id2 in the cluster where id1 belongs.
        {
 	 cluster[id1_n].push_back(id2[i]);
        }
 
-     if (flag1==0 && flag2 == 1)
+     if (flag1==0 && flag2 == 1)    //The reverse case
        {
 	 cluster[id2_n].push_back(id1[i]);
        }
 
-     if(flag1==0 && flag2 ==0)
+     if(flag1==0 && flag2 ==0)  //If none of them have been found in the existing clusters, then this is a new cluster. Start a new row, put the ids as the elements in the row.
        {
 	 clusterno=clusterno+1;
 	 std::vector<int> temp;
@@ -141,6 +141,7 @@ int main()
  i=i+1;
    }
 
+//Now print the clusters with the ids of the particles in it.
 
 
  int count=0;
@@ -156,7 +157,7 @@ int main()
 		cout << endl;
 		count=count+1;
 	}
- printf("Cluster no %d\n", clusterno);
+ printf("Total number of clusters found in the data :  %d\n", clusterno);
  tend = clock();
  printf("It took %e seconds.\n",(double)(tend-tbeg)/CLOCKS_PER_SEC);   
      }
