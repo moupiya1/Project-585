@@ -1,4 +1,5 @@
-//The parallel algorithm of union find . PARALLELIZED THE FIND PART.
+//The parallel algorithm of union find . 
+//PARALLELIZED THE CALCULATE DISTANCES OF EVERY PAIRS PART AND FIND THE IDS THAT BELONG TO EACH CLUSTER PART.
 
 #include <vector>
 #include <fstream>
