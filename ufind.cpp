@@ -53,7 +53,6 @@ int main()
 	     dist=sqrt((xpos[k]-xpos[j])*(xpos[k]-xpos[j])+(ypos[k]-ypos[j])*(ypos[k]-ypos[j]));
 	        if(dist<R)
 	       {
-		 // printf("%d %d %f\n",j,k,dist);
 		 id1.push_back(j);
 		 id2.push_back(k);           //If the distance is less then R, the pair ids are stored in a separate vector. All of next operations will be performed on these candidate pairs only.
 		 dless.push_back(dist);
@@ -65,35 +64,30 @@ int main()
        }
      printf("%zu %zu %d\n",id1.size(),id2.size(),count);
      
+     //Keep all the eligible particles in an array
      std::vector<int> A;
      A.reserve( id1.size() + id2.size() ); // preallocate memory
      A.insert( A.end(), id1.begin(), id1.end() );
      A.insert( A.end(), id2.begin(), id2.end() );
     
      sort(A.begin(),A.end());
-     // for(int z1=0;z1<12;z1++)
-     //{
-     //	 printf("%d\n",A[z1]);
-     //}
+     
       std::vector<int>::iterator it;
       it = std::unique (A.begin(), A.end());  
       A.resize( std::distance(A.begin(),it) );
   std::cout << "A contains:";
-  //for (it=A.begin(); it!=A.end(); ++it)
-  //std::cout << ' ' << *it;
-  //std::cout << '\n';
-
+  
  printf("%zu %zu %zu\n",id1.size(),id2.size(),A.size());
+ 
+ //allocate the array elements as the same as array indexes.
  for (count=0;count<A.size();count++)
    {
      A[count]=count;
    }
 
 std::cout << '\n';
-//for (it=A.begin(); it!=A.end(); ++it)
-//std::cout << *it<<" ";
-//std::cout << '\n';
 
+//Find the clusters using the union find method. 
   int i1=0,i2=0;
 
   for (count=0;count<id1.size();count++)
@@ -104,9 +98,8 @@ std::cout << '\n';
       A[i2]=A[i1];
     }
 std::cout << '\n';
-//for (it=A.begin(); it!=A.end(); ++it)
-//std::cout << *it<<" ";
-//std::cout << '\n';
+
+//find the number of clusters.
   int cno=0;
 
   for (count=0;count<A.size();count++)
@@ -116,7 +109,7 @@ std::cout << '\n';
 	cno=cno+1;
       }
   }
-
+//Extra book keeping for finding the cluster elements
   std::vector<int> copyA(A);
   sort(copyA.begin(),copyA.end());
    it = std::unique (copyA.begin(), copyA.end());  
@@ -134,6 +127,8 @@ std::cout << '\n';
   vector<int> clus[s];
  printf("number of cluster %d\n",cno);
 
+
+//Get the ids in each cluster
  for (int i=0;i<A.size();i++)
    {
      for(j=0;j<copyA.size();j++)
@@ -145,6 +140,7 @@ std::cout << '\n';
        }
    }
 
+//Print clusters and ids
  for(j=0;j<s;j++)
    {
      printf("cluster %d has\n",j);
