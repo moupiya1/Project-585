@@ -1,4 +1,4 @@
-//Parallel version of the for loop find method.  Everything is same, only I parallelized the search if the ids are already in a cluster part.
+//Parallel version of the BASIC for loop find method.  Everything is same, only I parallelized the search if the ids are already in a cluster part.
 
 #include <vector>
 #include <fstream>
